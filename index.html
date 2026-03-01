@@ -3,168 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Trendy Budget Store</title>
+<title>Sudheer Trendy Store</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{
-background:linear-gradient(135deg,#000000,#0f2027,#203a43,#2c5364);
-color:white;
-overflow-x:hidden;
-scroll-behavior:smooth;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
+
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:#fff;
+overflow-x:hidden;
+}
+
 header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 8%;
-background:rgba(0,0,0,0.6);
+padding:20px;
+text-align:center;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
 position:sticky;
 top:0;
 z-index:1000;
 }
-header h1{color:#00ffcc;font-weight:800;}
-nav a{
-color:white;
-text-decoration:none;
-margin-left:20px;
-transition:0.3s;
+
+header h1{
+font-size:28px;
+letter-spacing:2px;
 }
-nav a:hover{color:#00ffcc;}
 
 .hero{
-height:90vh;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
 text-align:center;
-background:linear-gradient(120deg,#00ffcc,#0066ff);
-color:black;
-animation:fadeIn 1.5s ease-in-out;
+padding:40px 20px;
 }
-.hero h2{font-size:50px;font-weight:800;}
-.hero p{margin-top:20px;font-size:18px;}
-.hero button{
-margin-top:30px;
-padding:15px 40px;
-border:none;
-border-radius:30px;
-background:black;
-color:#00ffcc;
-font-weight:600;
-cursor:pointer;
-transition:0.3s;
+
+.hero h2{
+font-size:32px;
+margin-bottom:10px;
 }
-.hero button:hover{transform:scale(1.1);}
 
-.section{padding:80px 8%;}
-.section h2{text-align:center;margin-bottom:50px;font-size:36px;}
+.counter{
+margin-top:15px;
+font-size:14px;
+opacity:0.8;
+}
 
-.cards{
+.products{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+padding:40px 20px;
 }
+
 .card{
-background:rgba(255,255,255,0.08);
-padding:20px;
-border-radius:20px;
-text-align:center;
-transition:0.4s;
-backdrop-filter:blur(10px);
+background:#ffffff;
+color:#111;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.3);
+transition:0.3s ease;
+position:relative;
 }
+
 .card:hover{
-transform:translateY(-10px) scale(1.03);
-background:rgba(0,255,204,0.2);
+transform:translateY(-8px);
+box-shadow:0 15px 35px rgba(0,0,0,0.5);
 }
+
 .card img{
 width:100%;
-border-radius:15px;
+height:230px;
+object-fit:cover;
 }
-.card h3{margin-top:15px;}
-.card p{font-size:14px;margin:10px 0;}
-.card button{
-padding:10px 20px;
-border:none;
-border-radius:20px;
-background:#00ffcc;
-color:black;
+
+.card-content{
+padding:15px;
+}
+
+.card-content h3{
+font-size:16px;
+margin-bottom:8px;
+min-height:40px;
+}
+
+.price{
+font-size:18px;
+font-weight:700;
+color:#0a7cff;
+margin-bottom:8px;
+}
+
+.rating{
+color:gold;
+font-size:14px;
+margin-bottom:10px;
+}
+
+.buy-btn{
+display:block;
+text-align:center;
+padding:10px;
+background:linear-gradient(45deg,#00c6ff,#0072ff);
+color:#fff;
+border-radius:8px;
+text-decoration:none;
 font-weight:600;
-cursor:pointer;
-}
-.rating{color:gold;margin-top:10px;}
-
-.stats{
-display:flex;
-justify-content:space-around;
-flex-wrap:wrap;
-text-align:center;
-padding:60px 8%;
-background:rgba(0,0,0,0.6);
-}
-.stat h3{
-font-size:40px;
-color:#00ffcc;
-}
-.stat p{margin-top:10px;}
-
-.about{
-text-align:center;
-padding:80px 8%;
+transition:0.3s;
 }
 
-.contact{
-text-align:center;
-padding:80px 8%;
-background:linear-gradient(120deg,#00ffcc,#0066ff);
-color:black;
-}
-.contact button{
-margin-top:20px;
-padding:12px 30px;
-border:none;
-background:black;
-color:#00ffcc;
-border-radius:30px;
-cursor:pointer;
+.buy-btn:hover{
+background:linear-gradient(45deg,#0072ff,#00c6ff);
 }
 
 footer{
-background:black;
 text-align:center;
-padding:20px;
-color:gray;
+padding:30px;
+background:#000;
+margin-top:40px;
 font-size:14px;
 }
 
-/* Floating WhatsApp */
-.whatsapp{
+.whatsapp-float{
 position:fixed;
 bottom:20px;
 right:20px;
 background:#25D366;
-color:white;
-padding:15px 20px;
+color:#fff;
+padding:12px 18px;
 border-radius:50px;
 font-weight:600;
 text-decoration:none;
-box-shadow:0 0 15px rgba(0,0,0,0.5);
-z-index:999;
-transition:0.3s;
-}
-.whatsapp:hover{transform:scale(1.1);}
-
-/* Animation */
-@keyframes fadeIn{
-0%{opacity:0;transform:translateY(30px);}
-100%{opacity:1;transform:translateY(0);}
-}
-
-@media(max-width:768px){
-.hero h2{font-size:32px;}
+box-shadow:0 5px 15px rgba(0,0,0,0.3);
 }
 </style>
 </head>
@@ -172,87 +145,177 @@ transition:0.3s;
 <body>
 
 <header>
-<h1>Trendy Budget Store</h1>
-<nav>
-<a href="#">Home</a>
-<a href="#products">Products</a>
-<a href="#contact">Contact</a>
-</nav>
+<h1>Sudheer Trendy Store</h1>
 </header>
 
 <section class="hero">
-<h2>Premium Budget Shopping Experience</h2>
-<p>Discover trending and affordable products curated for smart buyers.</p>
-<button onclick="document.getElementById('products').scrollIntoView();">Explore Products</button>
+<h2>Premium Gadgets & Accessories</h2>
+<p>Best Quality | Fast Delivery | Trusted Seller</p>
+<div class="counter">
+Visitors: <span id="visitorCount">0</span>
+</div>
 </section>
 
-<section id="products" class="section">
-<h2>Featured Products</h2>
-<div class="cards">
+<section class="products">
+
+<!-- PRODUCT TEMPLATE START -->
 
 <div class="card">
-<img src="https://via.placeholder.com/300x200">
-<h3>Smart Watch</h3>
-<p>Premium build quality with stylish design.</p>
+<img src="airp1ods-tws.jpg">
+<div class="card-content">
+<h3>Airp1ods TWS Wireless Earbuds</h3>
+<div class="price">₹452</div>
 <div class="rating">★★★★★</div>
-<button>View Details</button>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Airp1ods%20TWS%20Wireless%20Earbuds">Buy Now</a>
+</div>
 </div>
 
 <div class="card">
-<img src="https://via.placeholder.com/300x200">
-<h3>Bluetooth Earbuds</h3>
-<p>Crystal clear sound with deep bass.</p>
+<img src="wappler-neckband.jpg">
+<div class="card-content">
+<h3>Wappler BT 235V3 Neckband</h3>
+<div class="price">₹423</div>
 <div class="rating">★★★★☆</div>
-<button>View Details</button>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Wappler%20Neckband">Buy Now</a>
+</div>
 </div>
 
 <div class="card">
-<img src="https://via.placeholder.com/300x200">
-<h3>Men's Jacket</h3>
-<p>Perfect winter collection at budget price.</p>
+<img src="anc-earbuds.jpg">
+<div class="card-content">
+<h3>ANC Deep Bass Earbuds</h3>
+<div class="price">₹595</div>
 <div class="rating">★★★★★</div>
-<button>View Details</button>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20ANC%20Deep%20Bass%20Earbuds">Buy Now</a>
+</div>
 </div>
 
+<div class="card">
+<img src="bullet-neckband.jpg">
+<div class="card-content">
+<h3>Bullet Magnetic Neckband (Red)</h3>
+<div class="price">₹575</div>
+<div class="rating">★★★★☆</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Bullet%20Neckband">Buy Now</a>
 </div>
-</section>
+</div>
 
-<section class="stats">
-<div class="stat">
-<h3>10K+</h3>
-<p>Happy Visitors</p>
+<div class="card">
+<img src="rectangular-sunglasses.jpg">
+<div class="card-content">
+<h3>Women Rectangular Sunglasses</h3>
+<div class="price">₹325</div>
+<div class="rating">★★★★☆</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Rectangular%20Sunglasses">Buy Now</a>
 </div>
-<div class="stat">
-<h3>500+</h3>
-<p>Products Listed</p>
 </div>
-<div class="stat">
-<h3>4.8★</h3>
-<p>Average Rating</p>
-</div>
-</section>
 
-<section class="about">
-<h2>Why Choose Us?</h2>
-<p>We curate trending, high-quality and affordable products to help you shop smarter.</p>
-</section>
+<div class="card">
+<img src="aalae-sunglasses.jpg">
+<div class="card-content">
+<h3>AALAE Stylish Sunglasses</h3>
+<div class="price">₹304</div>
+<div class="rating">★★★★☆</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20AALAE%20Sunglasses">Buy Now</a>
+</div>
+</div>
 
-<section id="contact" class="contact">
-<h2>Business Enquiries</h2>
-<p>Email: sudhirbasti4@gmail.com</p>
-<button onclick="window.location.href='mailto:sudhirbasti4@gmail.com'">Email Us</button>
+<div class="card">
+<img src="double-spray-ac.jpg">
+<div class="card-content">
+<h3>Portable Double Spray Mini AC</h3>
+<div class="price">₹1354</div>
+<div class="rating">★★★★★</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Double%20Spray%20Mini%20AC">Buy Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="mini-ac-cooler.jpg">
+<div class="card-content">
+<h3>Portable Mini AC Air Cooler</h3>
+<div class="price">₹756</div>
+<div class="rating">★★★★☆</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Mini%20AC%20Cooler">Buy Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="mini-table-fan.jpg">
+<div class="card-content">
+<h3>Mini Table Fan 5 Inch</h3>
+<div class="price">₹575</div>
+<div class="rating">★★★★☆</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Mini%20Table%20Fan">Buy Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="usb-night-light.jpg">
+<div class="card-content">
+<h3>USB Mini Night Light (Pack of 4)</h3>
+<div class="price">₹296</div>
+<div class="rating">★★★★☆</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20USB%20Night%20Light">Buy Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="quad-call-elite.jpg">
+<div class="card-content">
+<h3>Noise Quad Call Elite</h3>
+<div class="price">₹1899</div>
+<div class="rating">★★★★★</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Quad%20Call%20Elite">Buy Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="colorfit-icon2.jpg">
+<div class="card-content">
+<h3>Noise ColorFit Icon 2 Elite</h3>
+<div class="price">₹1699</div>
+<div class="rating">★★★★★</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20ColorFit%20Icon%202%20Elite">Buy Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="digital-smartwatch.jpg">
+<div class="card-content">
+<h3>Top Quality Digital Smartwatch</h3>
+<div class="price">₹711</div>
+<div class="rating">★★★★☆</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Digital%20Smartwatch">Buy Now</a>
+</div>
+</div>
+
+<div class="card">
+<img src="smartwatch-black.jpg">
+<div class="card-content">
+<h3>Smartwatch Black Edition</h3>
+<div class="price">₹1182</div>
+<div class="rating">★★★★☆</div>
+<a class="buy-btn" href="https://wa.me/919235184682?text=I%20want%20Smartwatch%20Black%20Edition">Buy Now</a>
+</div>
+</div>
+
 </section>
 
 <footer>
-© 2026 Trendy Budget Store | All Rights Reserved
+© 2026 Sudheer Trendy Store | All Rights Reserved
 </footer>
 
-<!-- Business WhatsApp Button (Number Hidden) -->
-<a class="whatsapp" 
-href="https://wa.me/919235184682" 
-target="_blank">
-Chat on WhatsApp
-</a>
+<a class="whatsapp-float" href="https://wa.me/919235184682">Chat on WhatsApp</a>
+
+<script>
+if(localStorage.getItem("visits")){
+localStorage.setItem("visits",Number(localStorage.getItem("visits"))+1);
+}else{
+localStorage.setItem("visits",1);
+}
+document.getElementById("visitorCount").innerText=localStorage.getItem("visits");
+</script>
 
 </body>
 </html>
