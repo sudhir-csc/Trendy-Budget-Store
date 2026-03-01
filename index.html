@@ -22,81 +22,33 @@ position:fixed;
 top:0;
 width:100%;
 z-index:1000;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-header h1{font-size:18px;}
-
-.menu-btn{
-font-size:24px;
+.cart-icon{
 cursor:pointer;
+position:relative;
 }
 
-/* OVERLAY */
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.4);
-display:none;
-z-index:900;
+.cart-count{
+position:absolute;
+top:-8px;
+right:-8px;
+background:red;
+color:#fff;
+font-size:12px;
+padding:2px 6px;
+border-radius:50%;
 }
 
-/* SIDEBAR */
-.side-menu{
-position:fixed;
-top:0;
-right:-260px;
-width:250px;
-height:100%;
-background:#fff;
-box-shadow:-5px 0 20px rgba(0,0,0,0.2);
-transition:0.3s;
-padding-top:70px;
-z-index:1001;
-}
-
-.side-menu.open{
-right:0;
-}
-
-.side-menu a{
-display:block;
-padding:15px 20px;
-text-decoration:none;
-color:#111;
-border-bottom:1px solid #eee;
-}
-
-.side-menu a:hover{
-background:#f2f5ff;
-}
-
-/* TOP IMAGE */
-.top-banner{
+/* COD STRIP */
+.cod-strip{
 margin-top:60px;
+background:#f5f8ff;
 text-align:center;
-}
-
-.top-banner img{
-width:100%;
-max-height:300px;
-object-fit:cover;
-}
-
-/* SEARCH */
-.search-box{
-padding:15px;
-text-align:center;
-}
-
-.search-box input{
-width:90%;
-max-width:400px;
-padding:10px;
-border:1px solid #ccc;
-border-radius:6px;
+padding:8px;
+color:#0a58ff;
+font-weight:600;
 }
 
 /* PRODUCTS */
@@ -114,6 +66,12 @@ background:#fff;
 border-radius:12px;
 box-shadow:0 5px 15px rgba(0,0,0,0.08);
 overflow:hidden;
+transition:0.2s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
 }
 
 .card img{
@@ -133,81 +91,110 @@ margin:6px 0;
 .buy-btn{
 background:#00c853;
 color:#fff;
-text-align:center;
 padding:8px;
+text-align:center;
 border-radius:6px;
 cursor:pointer;
 font-weight:600;
+margin-top:5px;
 }
 
-/* FEEDBACK */
-.feedback-section{
-max-width:600px;
-margin:30px auto;
-padding:20px;
-display:none;
+.buy-btn:hover{
+transform:scale(1.05);
 }
 
-.stars span{
-font-size:25px;
-cursor:pointer;
-color:#ccc;
-}
-
-.stars span.active{
-color:#ffc107;
-}
-
-.review{
-background:#f5f5f5;
-padding:10px;
-margin-top:10px;
+.cart-btn{
+background:#111;
+color:#fff;
+padding:6px;
+text-align:center;
 border-radius:6px;
+cursor:pointer;
+margin-top:6px;
 }
 
-/* LOGIN MODAL */
-.modal{
-display:none;
+/* CART PANEL */
+.cart-panel{
 position:fixed;
+right:-350px;
 top:0;
-left:0;
-width:100%;
+width:320px;
 height:100%;
-background:rgba(0,0,0,0.6);
-justify-content:center;
-align-items:center;
+background:#fff;
+box-shadow:-5px 0 20px rgba(0,0,0,0.2);
+padding:20px;
+transition:0.3s;
 z-index:2000;
+overflow:auto;
 }
 
-.modal-content{
+.cart-panel.open{
+right:0;
+}
+
+/* REVIEWS */
+.review-section{
+background:#f5f8ff;
+padding:40px 20px;
+text-align:center;
+}
+
+.stars{color:#ffc107;font-size:18px;}
+
+/* WHY US */
+.why{
+padding:40px 20px;
+text-align:center;
+}
+
+.why-box{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+max-width:800px;
+margin:auto;
+}
+
+.why-item{
 background:#fff;
 padding:20px;
 border-radius:10px;
-width:90%;
-max-width:400px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-.modal-content input{
-width:100%;
-padding:8px;
-margin:6px 0;
-border:1px solid #ccc;
-border-radius:6px;
-}
-
-.submit-btn{
-background:#00c853;
+/* FOOTER */
+footer{
+background:#111;
 color:#fff;
-padding:10px;
-border:none;
-width:100%;
-border-radius:6px;
-cursor:pointer;
+padding:40px 20px;
+text-align:center;
+}
+
+footer a{
+color:#0a58ff;
+text-decoration:none;
+display:block;
+margin:5px 0;
+}
+
+/* WHATSAPP FLOAT */
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25d366;
+color:#fff;
+padding:12px 18px;
+border-radius:50px;
 font-weight:600;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+cursor:pointer;
+z-index:3000;
 }
 
 @media(max-width:600px){
 .products{grid-template-columns:1fr;}
+.why-box{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -215,49 +202,59 @@ font-weight:600;
 <body>
 
 <header>
-<h1>Sudheer Trendy Store</h1>
-<div class="menu-btn" onclick="toggleMenu()">☰</div>
+<h2>Sudheer Trendy Store</h2>
+<div class="cart-icon" onclick="toggleCart()">
+🛒
+<span class="cart-count" id="cartCount">0</span>
+</div>
 </header>
 
-<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<div class="side-menu" id="sideMenu">
-<a href="#" onclick="openLogin();toggleMenu()">🔐 Sign In</a>
-<a href="#" onclick="openFeedback();toggleMenu()">⭐ Feedback</a>
-<a href="#" onclick="openHelp();toggleMenu()">❓ Help & Support</a>
-</div>
-
-<div class="top-banner">
-<img src="sudheer.jpg">
-</div>
-
-<div class="search-box">
-<input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
-<p id="welcomeUser" style="margin-top:10px;color:#0a58ff;font-weight:600;"></p>
+<div class="cod-strip">
+🚚 Cash on Delivery Available | Fast Shipping | Trusted Seller
 </div>
 
 <section class="products" id="productList"></section>
 
-<div class="feedback-section" id="feedbackSection">
-<h3>Rate Our Store</h3>
-<div class="stars">
-<span onclick="rate(1)">★</span>
-<span onclick="rate(2)">★</span>
-<span onclick="rate(3)">★</span>
-<span onclick="rate(4)">★</span>
-<span onclick="rate(5)">★</span>
-</div>
-<textarea id="reviewText" placeholder="Write feedback..." style="width:100%;padding:8px;margin-top:10px;"></textarea>
-<button class="submit-btn" onclick="submitReview()">Submit</button>
-<div id="reviews"></div>
+<!-- CART -->
+<div class="cart-panel" id="cartPanel">
+<h3>Your Cart</h3>
+<div id="cartItems"></div>
 </div>
 
-<div class="modal" id="loginModal">
-<div class="modal-content">
-<h3>Sign In</h3>
-<input type="text" id="loginName" placeholder="Enter Name">
-<button class="submit-btn" onclick="saveLogin()">Login</button>
+<!-- REVIEWS -->
+<section class="review-section">
+<h2>Customer Reviews</h2>
+<p class="stars">★★★★★ (4.8/5)</p>
+<p>Sandhya ⭐⭐⭐⭐⭐<br>Very fast delivery and product quality is amazing!</p>
+<p>Rahul ⭐⭐⭐⭐<br>Budget price me best gadget store.</p>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why">
+<h2>Why Choose Us?</h2>
+<div class="why-box">
+<div class="why-item">✔ Trusted Seller</div>
+<div class="why-item">✔ Secure Checkout</div>
+<div class="why-item">✔ Fast Delivery</div>
+<div class="why-item">✔ Easy Replacement</div>
 </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<h3>Sudheer Trendy Store</h3>
+<p>Your trusted destination for budget gadgets and trending electronics.</p>
+<a href="#">Privacy Policy</a>
+<a href="#">Refund Policy</a>
+<a href="#">Terms & Conditions</a>
+<a href="#">Contact: sudhirbasti4@gmail.com</a>
+<p>Instagram: @sudheersharma.official</p>
+<p>Powered by Sudheer Tech | Growth | Digital Branding</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<div class="whatsapp" onclick="window.open('https://wa.me/919235184684','_blank')">
+Chat With Us
 </div>
 
 <script>
@@ -265,22 +262,13 @@ const products=[
 {name:"Airp1ods TWS Wireless Earbuds",price:"₹452",img:"airp1ods-tws.jpg"},
 {name:"Wappler BT 235V3 Neckband",price:"₹423",img:"wappler-neckband.jpg"},
 {name:"ANC Deep Bass Earbuds",price:"₹595",img:"anc-earbuds.jpg"},
-{name:"Bullet Magnetic Neckband (Red)",price:"₹575",img:"bullet-neckband.jpg"},
-{name:"Women Rectangular Sunglasses",price:"₹325",img:"rectangular-sunglasses.jpg"},
-{name:"AALAE Stylish Sunglasses",price:"₹304",img:"aalae-sunglasses.jpg"},
-{name:"Portable Double Spray Mini AC",price:"₹1354",img:"double-spray-ac.jpg"},
-{name:"Portable Mini AC Air Cooler",price:"₹756",img:"mini-ac-cooler.jpg"},
-{name:"Mini Table Fan 5 Inch",price:"₹575",img:"mini-table-fan.jpg"},
-{name:"USB Mini Night Light (Pack of 4)",price:"₹296",img:"usb-night-light.jpg"},
-{name:"Noise Quad Call Elite",price:"₹1899",img:"quad-call-elite.jpg"},
-{name:"Noise ColorFit Icon 2 Elite",price:"₹1699",img:"colorfit-icon2.jpg"},
-{name:"Top Quality Digital Smartwatch",price:"₹711",img:"digital-smartwatch.jpg"},
-{name:"Smartwatch Black Edition",price:"₹1182",img:"smartwatch-black.jpg"}
+{name:"Bullet Magnetic Neckband (Red)",price:"₹575",img:"bullet-neckband.jpg"}
 ];
+
+let cart=[];
 
 function renderProducts(){
 let list=document.getElementById("productList");
-list.innerHTML="";
 products.forEach(p=>{
 list.innerHTML+=`
 <div class="card">
@@ -289,72 +277,29 @@ list.innerHTML+=`
 <h4>${p.name}</h4>
 <div class="price">${p.price}</div>
 <div class="buy-btn">Buy Now</div>
-</div></div>`;
+<div class="cart-btn" onclick="addToCart('${p.name}','${p.price}')">Add to Cart</div>
+</div>
+</div>`;
 });
 }
 renderProducts();
 
-function toggleMenu(){
-const menu=document.getElementById("sideMenu");
-const overlay=document.getElementById("overlay");
-menu.classList.toggle("open");
-overlay.style.display=menu.classList.contains("open")?"block":"none";
+function addToCart(name,price){
+cart.push({name,price});
+document.getElementById("cartCount").innerText=cart.length;
+renderCart();
 }
 
-function searchProducts(){
-let input=document.getElementById("searchInput").value.toLowerCase();
-let cards=document.querySelectorAll(".card");
-cards.forEach(card=>{
-let title=card.querySelector("h4").innerText.toLowerCase();
-card.style.display=title.includes(input)?"block":"none";
+function renderCart(){
+let items=document.getElementById("cartItems");
+items.innerHTML="";
+cart.forEach(i=>{
+items.innerHTML+=`<p>${i.name} - ${i.price}</p>`;
 });
 }
 
-function openLogin(){
-document.getElementById("loginModal").style.display="flex";
-}
-
-function saveLogin(){
-let name=document.getElementById("loginName").value;
-if(name){
-localStorage.setItem("username",name);
-document.getElementById("welcomeUser").innerText="Welcome, "+name;
-document.getElementById("loginModal").style.display="none";
-}
-}
-
-window.onload=function(){
-let user=localStorage.getItem("username");
-if(user){
-document.getElementById("welcomeUser").innerText="Welcome, "+user;
-}
-}
-
-function openFeedback(){
-document.getElementById("feedbackSection").style.display="block";
-}
-
-let currentRating=0;
-function rate(num){
-currentRating=num;
-let stars=document.querySelectorAll(".stars span");
-stars.forEach((s,i)=>s.classList.toggle("active",i<num));
-}
-
-function submitReview(){
-let text=document.getElementById("reviewText").value;
-if(text){
-document.getElementById("reviews").innerHTML+=
-`<div class="review">⭐ ${currentRating}/5<br>${text}</div>`;
-document.getElementById("reviewText").value="";
-}
-}
-
-function openHelp(){
-let problem=prompt("Describe your problem:");
-if(problem){
-window.location.href=`mailto:sudhirbasti4@gmail.com?subject=Help Request&body=${problem}`;
-}
+function toggleCart(){
+document.getElementById("cartPanel").classList.toggle("open");
 }
 </script>
 
