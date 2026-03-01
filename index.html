@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudheer Deals Hub</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#000000,#0f2027,#203a43,#2c5364);
+    color:white;
+}
+
+header{
+    text-align:center;
+    padding:50px 20px;
+}
+
+header h1{
+    font-size:40px;
+    background: linear-gradient(90deg,#00ffcc,#00bfff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+header p{
+    font-size:18px;
+    color:#ccc;
+}
+
+.container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+    padding:40px;
+}
+
+.card{
+    background:linear-gradient(145deg,#0f2027,#2c5364);
+    border-radius:15px;
+    width:280px;
+    padding:20px;
+    box-shadow:0 0 20px rgba(0,255,200,0.3);
+    text-align:center;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.05);
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+
+.card h3{
+    margin:15px 0 5px;
+}
+
+.price{
+    color:#00ffcc;
+    font-size:18px;
+}
+
+.rating{
+    color:gold;
+    margin:8px 0;
+}
+
+button{
+    background:linear-gradient(90deg,#00ffcc,#00bfff);
+    border:none;
+    padding:10px 20px;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    opacity:0.8;
+}
+
+.feedback{
+    text-align:center;
+    margin:40px;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    background:#000;
+}
+
+a{
+    color:#00ffcc;
+    text-decoration:none;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>Sudheer Deals Hub</h1>
+<p>Best Trending Products | Zero Investment | High Commission</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<img src="https://via.placeholder.com/280x200" alt="Product">
+<h3>Trendy Fashion Kurti</h3>
+<p class="price">499</p>
+<div class="rating"></div>
+<a href="#" target="_blank">
+<button>Buy Now</button>
+</a>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/280x200" alt="Product">
+<h3>Wireless Earbuds</h3>
+<p class="price">899</p>
+<div class="rating"></div>
+<a href="#" target="_blank">
+<button>Buy Now</button>
+</a>
+</div>
+
+</div>
+
+<div class="feedback">
+<h2>Rate Our Website</h2>
+<button onclick="alert('Thanks for your feedback!')">Give Feedback</button>
+</div>
+
+<footer>
+<p>Contact: 
+<a href="mailto:sudhirbasti4@gmail.com">
+sudhirbasti4@gmail.com
+</a>
+</p>
+<p>© 2026 Sudheer Deals Hub</p>
+</footer>
+
+</body>
+</html>
