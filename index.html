@@ -19,8 +19,8 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 position:fixed;
-width:100%;
 top:0;
+width:100%;
 z-index:1000;
 }
 
@@ -31,6 +31,7 @@ font-size:24px;
 cursor:pointer;
 }
 
+/* OVERLAY */
 .overlay{
 position:fixed;
 top:0;
@@ -42,7 +43,7 @@ display:none;
 z-index:900;
 }
 
-/* SIDE MENU */
+/* SIDEBAR */
 .side-menu{
 position:fixed;
 top:0;
@@ -56,6 +57,10 @@ padding-top:70px;
 z-index:1001;
 }
 
+.side-menu.open{
+right:0;
+}
+
 .side-menu a{
 display:block;
 padding:15px 20px;
@@ -64,9 +69,11 @@ color:#111;
 border-bottom:1px solid #eee;
 }
 
-.side-menu a:hover{background:#f0f5ff;}
+.side-menu a:hover{
+background:#f2f5ff;
+}
 
-/* TOP BANNER IMAGE */
+/* TOP IMAGE */
 .top-banner{
 margin-top:60px;
 text-align:center;
@@ -133,12 +140,12 @@ cursor:pointer;
 font-weight:600;
 }
 
-/* FEEDBACK SECTION */
+/* FEEDBACK */
 .feedback-section{
 max-width:600px;
 margin:30px auto;
 padding:20px;
-border-top:2px solid #eee;
+display:none;
 }
 
 .stars span{
@@ -152,13 +159,13 @@ color:#ffc107;
 }
 
 .review{
-background:#f8f8f8;
+background:#f5f5f5;
 padding:10px;
 margin-top:10px;
 border-radius:6px;
 }
 
-/* MODAL */
+/* LOGIN MODAL */
 .modal{
 display:none;
 position:fixed;
@@ -180,8 +187,7 @@ width:90%;
 max-width:400px;
 }
 
-.modal-content input,
-.modal-content textarea{
+.modal-content input{
 width:100%;
 padding:8px;
 margin:6px 0;
@@ -216,9 +222,9 @@ font-weight:600;
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
 <div class="side-menu" id="sideMenu">
-<a href="#" onclick="openLogin()">🔐 Sign In</a>
-<a href="#" onclick="openFeedback()">⭐ Feedback</a>
-<a href="#" onclick="openHelp()">❓ Help & Support</a>
+<a href="#" onclick="openLogin();toggleMenu()">🔐 Sign In</a>
+<a href="#" onclick="openFeedback();toggleMenu()">⭐ Feedback</a>
+<a href="#" onclick="openHelp();toggleMenu()">❓ Help & Support</a>
 </div>
 
 <div class="top-banner">
@@ -232,8 +238,7 @@ font-weight:600;
 
 <section class="products" id="productList"></section>
 
-<!-- FEEDBACK AREA -->
-<div class="feedback-section" id="feedbackSection" style="display:none;">
+<div class="feedback-section" id="feedbackSection">
 <h3>Rate Our Store</h3>
 <div class="stars">
 <span onclick="rate(1)">★</span>
@@ -242,12 +247,11 @@ font-weight:600;
 <span onclick="rate(4)">★</span>
 <span onclick="rate(5)">★</span>
 </div>
-<textarea id="reviewText" placeholder="Write your feedback..."></textarea>
+<textarea id="reviewText" placeholder="Write feedback..." style="width:100%;padding:8px;margin-top:10px;"></textarea>
 <button class="submit-btn" onclick="submitReview()">Submit</button>
 <div id="reviews"></div>
 </div>
 
-<!-- LOGIN -->
 <div class="modal" id="loginModal">
 <div class="modal-content">
 <h3>Sign In</h3>
@@ -291,20 +295,23 @@ list.innerHTML+=`
 renderProducts();
 
 function toggleMenu(){
-let menu=document.getElementById("sideMenu");
-let overlay=document.getElementById("overlay");
-if(menu.style.right==="0px"){
-menu.style.right="-260px";
-overlay.style.display="none";
-}else{
-menu.style.right="0px";
-overlay.style.display="block";
+const menu=document.getElementById("sideMenu");
+const overlay=document.getElementById("overlay");
+menu.classList.toggle("open");
+overlay.style.display=menu.classList.contains("open")?"block":"none";
 }
+
+function searchProducts(){
+let input=document.getElementById("searchInput").value.toLowerCase();
+let cards=document.querySelectorAll(".card");
+cards.forEach(card=>{
+let title=card.querySelector("h4").innerText.toLowerCase();
+card.style.display=title.includes(input)?"block":"none";
+});
 }
 
 function openLogin(){
 document.getElementById("loginModal").style.display="flex";
-toggleMenu();
 }
 
 function saveLogin(){
@@ -325,23 +332,20 @@ document.getElementById("welcomeUser").innerText="Welcome, "+user;
 
 function openFeedback(){
 document.getElementById("feedbackSection").style.display="block";
-toggleMenu();
 }
 
 let currentRating=0;
 function rate(num){
 currentRating=num;
 let stars=document.querySelectorAll(".stars span");
-stars.forEach((s,i)=>{
-s.classList.toggle("active",i<num);
-});
+stars.forEach((s,i)=>s.classList.toggle("active",i<num));
 }
 
 function submitReview(){
 let text=document.getElementById("reviewText").value;
 if(text){
 document.getElementById("reviews").innerHTML+=
-`<div class="review">⭐ ${currentRating}/5 <br>${text}</div>`;
+`<div class="review">⭐ ${currentRating}/5<br>${text}</div>`;
 document.getElementById("reviewText").value="";
 }
 }
@@ -351,7 +355,6 @@ let problem=prompt("Describe your problem:");
 if(problem){
 window.location.href=`mailto:sudhirbasti4@gmail.com?subject=Help Request&body=${problem}`;
 }
-toggleMenu();
 }
 </script>
 
