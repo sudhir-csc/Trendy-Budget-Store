@@ -8,22 +8,41 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#ffffff;color:#111;}
+body{background:#fff;color:#111;}
 
 /* HEADER */
 header{
 background:#0a58ff;
 color:#fff;
-padding:18px 15px;
+padding:15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+position:fixed;
+width:100%;
+top:0;
+z-index:1000;
 }
 
-header h1{font-size:20px;}
+header h1{font-size:18px;}
 
-.menu-btn{font-size:24px;cursor:pointer;}
+.menu-btn{
+font-size:24px;
+cursor:pointer;
+}
 
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+display:none;
+z-index:900;
+}
+
+/* SIDE MENU */
 .side-menu{
 position:fixed;
 top:0;
@@ -33,8 +52,8 @@ height:100%;
 background:#fff;
 box-shadow:-5px 0 20px rgba(0,0,0,0.2);
 transition:0.3s;
-padding-top:60px;
-z-index:9999;
+padding-top:70px;
+z-index:1001;
 }
 
 .side-menu a{
@@ -45,7 +64,19 @@ color:#111;
 border-bottom:1px solid #eee;
 }
 
-.side-menu a:hover{background:#f2f9ff;}
+.side-menu a:hover{background:#f0f5ff;}
+
+/* TOP BANNER IMAGE */
+.top-banner{
+margin-top:60px;
+text-align:center;
+}
+
+.top-banner img{
+width:100%;
+max-height:300px;
+object-fit:cover;
+}
 
 /* SEARCH */
 .search-box{
@@ -80,16 +111,11 @@ overflow:hidden;
 
 .card img{
 width:100%;
-height:220px;
+height:200px;
 object-fit:cover;
 }
 
 .card-content{padding:12px;}
-
-.card-content h3{
-font-size:14px;
-min-height:40px;
-}
 
 .price{
 color:#0a58ff;
@@ -107,7 +133,32 @@ cursor:pointer;
 font-weight:600;
 }
 
-/* MODALS */
+/* FEEDBACK SECTION */
+.feedback-section{
+max-width:600px;
+margin:30px auto;
+padding:20px;
+border-top:2px solid #eee;
+}
+
+.stars span{
+font-size:25px;
+cursor:pointer;
+color:#ccc;
+}
+
+.stars span.active{
+color:#ffc107;
+}
+
+.review{
+background:#f8f8f8;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+}
+
+/* MODAL */
 .modal{
 display:none;
 position:fixed;
@@ -118,6 +169,7 @@ height:100%;
 background:rgba(0,0,0,0.6);
 justify-content:center;
 align-items:center;
+z-index:2000;
 }
 
 .modal-content{
@@ -148,36 +200,6 @@ cursor:pointer;
 font-weight:600;
 }
 
-.confirm-box{
-background:#fff;
-padding:25px;
-border-radius:12px;
-text-align:center;
-max-width:320px;
-}
-
-.confirm-box h3{
-color:#00c853;
-margin-bottom:10px;
-}
-
-.close-btn{
-margin-top:10px;
-padding:6px 12px;
-background:#0a58ff;
-color:#fff;
-border:none;
-border-radius:6px;
-cursor:pointer;
-}
-
-footer{
-text-align:center;
-padding:20px;
-background:#f8f8f8;
-margin-top:20px;
-}
-
 @media(max-width:600px){
 .products{grid-template-columns:1fr;}
 }
@@ -191,11 +213,16 @@ margin-top:20px;
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
 </header>
 
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
 <div class="side-menu" id="sideMenu">
 <a href="#" onclick="openLogin()">🔐 Sign In</a>
-<a href="#" onclick="logout()">🚪 Logout</a>
-<a href="#">⭐ Feedback</a>
-<a href="#">❓ Help & Support</a>
+<a href="#" onclick="openFeedback()">⭐ Feedback</a>
+<a href="#" onclick="openHelp()">❓ Help & Support</a>
+</div>
+
+<div class="top-banner">
+<img src="sudheer.jpg">
 </div>
 
 <div class="search-box">
@@ -205,39 +232,29 @@ margin-top:20px;
 
 <section class="products" id="productList"></section>
 
-<!-- LOGIN MODAL -->
+<!-- FEEDBACK AREA -->
+<div class="feedback-section" id="feedbackSection" style="display:none;">
+<h3>Rate Our Store</h3>
+<div class="stars">
+<span onclick="rate(1)">★</span>
+<span onclick="rate(2)">★</span>
+<span onclick="rate(3)">★</span>
+<span onclick="rate(4)">★</span>
+<span onclick="rate(5)">★</span>
+</div>
+<textarea id="reviewText" placeholder="Write your feedback..."></textarea>
+<button class="submit-btn" onclick="submitReview()">Submit</button>
+<div id="reviews"></div>
+</div>
+
+<!-- LOGIN -->
 <div class="modal" id="loginModal">
 <div class="modal-content">
 <h3>Sign In</h3>
-<input type="text" id="loginName" placeholder="Enter Your Name">
+<input type="text" id="loginName" placeholder="Enter Name">
 <button class="submit-btn" onclick="saveLogin()">Login</button>
 </div>
 </div>
-
-<!-- ORDER MODAL -->
-<div class="modal" id="orderModal">
-<div class="modal-content">
-<h3>Delivery Details</h3>
-<input type="text" id="custName" placeholder="Full Name">
-<input type="text" id="custMobile" placeholder="Mobile Number">
-<textarea id="custAddress" placeholder="Full Address"></textarea>
-<input type="text" id="custPin" placeholder="Pincode">
-<button class="submit-btn" onclick="sendOrder()">Submit Order</button>
-</div>
-</div>
-
-<!-- CONFIRM -->
-<div class="modal" id="confirmModal">
-<div class="confirm-box">
-<h3>✅ Order Confirmed</h3>
-<p id="orderIdText"></p>
-<button class="close-btn" onclick="closeConfirm()">OK</button>
-</div>
-</div>
-
-<footer>
-More exciting products coming soon 🚀
-</footer>
 
 <script>
 const products=[
@@ -257,40 +274,37 @@ const products=[
 {name:"Smartwatch Black Edition",price:"₹1182",img:"smartwatch-black.jpg"}
 ];
 
-let selectedProduct="",selectedPrice="";
-
 function renderProducts(){
-const list=document.getElementById("productList");
+let list=document.getElementById("productList");
 list.innerHTML="";
 products.forEach(p=>{
 list.innerHTML+=`
 <div class="card">
 <img src="${p.img}">
 <div class="card-content">
-<h3>${p.name}</h3>
+<h4>${p.name}</h4>
 <div class="price">${p.price}</div>
-<div class="buy-btn" onclick="openForm('${p.name}','${p.price}')">Buy Now</div>
+<div class="buy-btn">Buy Now</div>
 </div></div>`;
 });
 }
 renderProducts();
 
-function searchProducts(){
-let input=document.getElementById("searchInput").value.toLowerCase();
-let cards=document.querySelectorAll(".card");
-cards.forEach(card=>{
-let title=card.querySelector("h3").innerText.toLowerCase();
-card.style.display=title.includes(input)?"block":"none";
-});
-}
-
 function toggleMenu(){
 let menu=document.getElementById("sideMenu");
-menu.style.right=menu.style.right==="0px"?"-260px":"0px";
+let overlay=document.getElementById("overlay");
+if(menu.style.right==="0px"){
+menu.style.right="-260px";
+overlay.style.display="none";
+}else{
+menu.style.right="0px";
+overlay.style.display="block";
+}
 }
 
 function openLogin(){
 document.getElementById("loginModal").style.display="flex";
+toggleMenu();
 }
 
 function saveLogin(){
@@ -302,11 +316,6 @@ document.getElementById("loginModal").style.display="none";
 }
 }
 
-function logout(){
-localStorage.removeItem("username");
-document.getElementById("welcomeUser").innerText="";
-}
-
 window.onload=function(){
 let user=localStorage.getItem("username");
 if(user){
@@ -314,42 +323,35 @@ document.getElementById("welcomeUser").innerText="Welcome, "+user;
 }
 }
 
-function openForm(name,price){
-selectedProduct=name;
-selectedPrice=price;
-document.getElementById("orderModal").style.display="flex";
+function openFeedback(){
+document.getElementById("feedbackSection").style.display="block";
+toggleMenu();
 }
 
-function generateOrderId(){
-return "SUD"+Date.now();
+let currentRating=0;
+function rate(num){
+currentRating=num;
+let stars=document.querySelectorAll(".stars span");
+stars.forEach((s,i)=>{
+s.classList.toggle("active",i<num);
+});
 }
 
-function sendOrder(){
-let name=document.getElementById("custName").value;
-let mobile=document.getElementById("custMobile").value;
-let address=document.getElementById("custAddress").value;
-let pin=document.getElementById("custPin").value;
-
-if(!name||!mobile||!address||!pin){
-alert("Fill all details");
-return;
+function submitReview(){
+let text=document.getElementById("reviewText").value;
+if(text){
+document.getElementById("reviews").innerHTML+=
+`<div class="review">⭐ ${currentRating}/5 <br>${text}</div>`;
+document.getElementById("reviewText").value="";
+}
 }
 
-let orderId=generateOrderId();
-
-let message=`New Order%0AOrder ID: ${orderId}%0AProduct: ${selectedProduct}%0APrice: ${selectedPrice}%0AName: ${name}%0AMobile: ${mobile}%0AAddress: ${address}%0APincode: ${pin}%0APayment: COD`;
-
-document.getElementById("orderModal").style.display="none";
-document.getElementById("orderIdText").innerText="Order ID: "+orderId;
-document.getElementById("confirmModal").style.display="flex";
-
-setTimeout(()=>{
-window.open(`https://wa.me/919235184684?text=${message}`,'_blank');
-},1500);
+function openHelp(){
+let problem=prompt("Describe your problem:");
+if(problem){
+window.location.href=`mailto:sudhirbasti4@gmail.com?subject=Help Request&body=${problem}`;
 }
-
-function closeConfirm(){
-document.getElementById("confirmModal").style.display="none";
+toggleMenu();
 }
 </script>
 
