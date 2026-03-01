@@ -3,149 +3,256 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sudheer Deals Hub</title>
+<title>Trendy Budget Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#000000,#0f2027,#203a43,#2c5364);
-    color:white;
+background:linear-gradient(135deg,#000000,#0f2027,#203a43,#2c5364);
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
 }
-
 header{
-    text-align:center;
-    padding:50px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 8%;
+background:rgba(0,0,0,0.6);
+position:sticky;
+top:0;
+z-index:1000;
 }
-
-header h1{
-    font-size:40px;
-    background: linear-gradient(90deg,#00ffcc,#00bfff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+header h1{color:#00ffcc;font-weight:800;}
+nav a{
+color:white;
+text-decoration:none;
+margin-left:20px;
+transition:0.3s;
 }
+nav a:hover{color:#00ffcc;}
 
-header p{
-    font-size:18px;
-    color:#ccc;
+.hero{
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+background:linear-gradient(120deg,#00ffcc,#0066ff);
+color:black;
+animation:fadeIn 1.5s ease-in-out;
 }
-
-.container{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:30px;
-    padding:40px;
+.hero h2{font-size:50px;font-weight:800;}
+.hero p{margin-top:20px;font-size:18px;}
+.hero button{
+margin-top:30px;
+padding:15px 40px;
+border:none;
+border-radius:30px;
+background:black;
+color:#00ffcc;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
 }
+.hero button:hover{transform:scale(1.1);}
 
+.section{padding:80px 8%;}
+.section h2{text-align:center;margin-bottom:50px;font-size:36px;}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
 .card{
-    background:linear-gradient(145deg,#0f2027,#2c5364);
-    border-radius:15px;
-    width:280px;
-    padding:20px;
-    box-shadow:0 0 20px rgba(0,255,200,0.3);
-    text-align:center;
-    transition:0.3s;
+background:rgba(255,255,255,0.08);
+padding:20px;
+border-radius:20px;
+text-align:center;
+transition:0.4s;
+backdrop-filter:blur(10px);
 }
-
 .card:hover{
-    transform:scale(1.05);
+transform:translateY(-10px) scale(1.03);
+background:rgba(0,255,204,0.2);
 }
-
 .card img{
-    width:100%;
-    border-radius:10px;
+width:100%;
+border-radius:15px;
+}
+.card h3{margin-top:15px;}
+.card p{font-size:14px;margin:10px 0;}
+.card button{
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#00ffcc;
+color:black;
+font-weight:600;
+cursor:pointer;
+}
+.rating{color:gold;margin-top:10px;}
+
+.stats{
+display:flex;
+justify-content:space-around;
+flex-wrap:wrap;
+text-align:center;
+padding:60px 8%;
+background:rgba(0,0,0,0.6);
+}
+.stat h3{
+font-size:40px;
+color:#00ffcc;
+}
+.stat p{margin-top:10px;}
+
+.about{
+text-align:center;
+padding:80px 8%;
 }
 
-.card h3{
-    margin:15px 0 5px;
+.contact{
+text-align:center;
+padding:80px 8%;
+background:linear-gradient(120deg,#00ffcc,#0066ff);
+color:black;
 }
-
-.price{
-    color:#00ffcc;
-    font-size:18px;
-}
-
-.rating{
-    color:gold;
-    margin:8px 0;
-}
-
-button{
-    background:linear-gradient(90deg,#00ffcc,#00bfff);
-    border:none;
-    padding:10px 20px;
-    border-radius:25px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-button:hover{
-    opacity:0.8;
-}
-
-.feedback{
-    text-align:center;
-    margin:40px;
+.contact button{
+margin-top:20px;
+padding:12px 30px;
+border:none;
+background:black;
+color:#00ffcc;
+border-radius:30px;
+cursor:pointer;
 }
 
 footer{
-    text-align:center;
-    padding:20px;
-    background:#000;
+background:black;
+text-align:center;
+padding:20px;
+color:gray;
+font-size:14px;
 }
 
-a{
-    color:#00ffcc;
-    text-decoration:none;
+/* Floating WhatsApp */
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:white;
+padding:15px 20px;
+border-radius:50px;
+font-weight:600;
+text-decoration:none;
+box-shadow:0 0 15px rgba(0,0,0,0.5);
+z-index:999;
+transition:0.3s;
+}
+.whatsapp:hover{transform:scale(1.1);}
+
+/* Animation */
+@keyframes fadeIn{
+0%{opacity:0;transform:translateY(30px);}
+100%{opacity:1;transform:translateY(0);}
+}
+
+@media(max-width:768px){
+.hero h2{font-size:32px;}
 }
 </style>
-
 </head>
+
 <body>
 
 <header>
-<h1>Sudheer Deals Hub</h1>
-<p>Best Trending Products | Zero Investment | High Commission</p>
+<h1>Trendy Budget Store</h1>
+<nav>
+<a href="#">Home</a>
+<a href="#products">Products</a>
+<a href="#contact">Contact</a>
+</nav>
 </header>
 
-<div class="container">
+<section class="hero">
+<h2>Premium Budget Shopping Experience</h2>
+<p>Discover trending and affordable products curated for smart buyers.</p>
+<button onclick="document.getElementById('products').scrollIntoView();">Explore Products</button>
+</section>
+
+<section id="products" class="section">
+<h2>Featured Products</h2>
+<div class="cards">
 
 <div class="card">
-<img src="https://via.placeholder.com/280x200" alt="Product">
-<h3>Trendy Fashion Kurti</h3>
-<p class="price">499</p>
-<div class="rating"></div>
-<a href="#" target="_blank">
-<button>Buy Now</button>
-</a>
+<img src="https://via.placeholder.com/300x200">
+<h3>Smart Watch</h3>
+<p>Premium build quality with stylish design.</p>
+<div class="rating">★★★★★</div>
+<button>View Details</button>
 </div>
 
 <div class="card">
-<img src="https://via.placeholder.com/280x200" alt="Product">
-<h3>Wireless Earbuds</h3>
-<p class="price">899</p>
-<div class="rating"></div>
-<a href="#" target="_blank">
-<button>Buy Now</button>
-</a>
+<img src="https://via.placeholder.com/300x200">
+<h3>Bluetooth Earbuds</h3>
+<p>Crystal clear sound with deep bass.</p>
+<div class="rating">★★★★☆</div>
+<button>View Details</button>
+</div>
+
+<div class="card">
+<img src="https://via.placeholder.com/300x200">
+<h3>Men's Jacket</h3>
+<p>Perfect winter collection at budget price.</p>
+<div class="rating">★★★★★</div>
+<button>View Details</button>
 </div>
 
 </div>
+</section>
 
-<div class="feedback">
-<h2>Rate Our Website</h2>
-<button onclick="alert('Thanks for your feedback!')">Give Feedback</button>
+<section class="stats">
+<div class="stat">
+<h3>10K+</h3>
+<p>Happy Visitors</p>
 </div>
+<div class="stat">
+<h3>500+</h3>
+<p>Products Listed</p>
+</div>
+<div class="stat">
+<h3>4.8★</h3>
+<p>Average Rating</p>
+</div>
+</section>
+
+<section class="about">
+<h2>Why Choose Us?</h2>
+<p>We curate trending, high-quality and affordable products to help you shop smarter.</p>
+</section>
+
+<section id="contact" class="contact">
+<h2>Business Enquiries</h2>
+<p>Email: sudhirbasti4@gmail.com</p>
+<button onclick="window.location.href='mailto:sudhirbasti4@gmail.com'">Email Us</button>
+</section>
 
 <footer>
-<p>Contact: 
-<a href="mailto:sudhirbasti4@gmail.com">
-sudhirbasti4@gmail.com
-</a>
-</p>
-<p>� 2026 Sudheer Deals Hub</p>
+© 2026 Trendy Budget Store | All Rights Reserved
 </footer>
+
+<!-- Business WhatsApp Button (Number Hidden) -->
+<a class="whatsapp" 
+href="https://wa.me/919235184682" 
+target="_blank">
+Chat on WhatsApp
+</a>
 
 </body>
 </html>
