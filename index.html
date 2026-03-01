@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sudheer Trendy Store | Premium</title>
+    <title>Sudheer Trendy Store</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --primary: #0a58ff; --premium-black: #1a1a1a; --bg-light: #f4f7fe; }
@@ -11,14 +11,13 @@
         body { background: var(--bg-light); color: #333; }
 
         header {
-            background: rgba(10, 88, 255, 0.95); backdrop-filter: blur(10px);
-            color: #fff; padding: 15px 20px; display: flex;
-            justify-content: space-between; align-items: center;
+            background: #0a58ff; color: #fff; padding: 15px 20px; 
+            display: flex; justify-content: space-between; align-items: center;
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .logo { font-size: 19px; font-weight: 700; }
+        .logo { font-size: 18px; font-weight: 700; }
         .cart-icon { position: relative; font-size: 22px; cursor: pointer; }
         .cart-count {
             position: absolute; top: -5px; right: -10px;
@@ -27,13 +26,14 @@
         }
 
         .category-nav {
-            margin-top: 70px; display: flex; overflow-x: auto;
-            background: #fff; padding: 12px; gap: 10px;
+            margin-top: 65px; display: flex; overflow-x: auto;
+            background: #fff; padding: 10px; gap: 8px;
             border-bottom: 1px solid #eee; scrollbar-width: none;
         }
+        .category-nav::-webkit-scrollbar { display: none; }
         .cat-btn {
-            padding: 7px 16px; background: #f0f0f0;
-            border-radius: 20px; font-size: 13px; cursor: pointer; white-space: nowrap;
+            padding: 6px 15px; background: #f0f0f0;
+            border-radius: 20px; font-size: 12px; cursor: pointer; white-space: nowrap;
         }
         .cat-btn.active { background: var(--primary); color: #fff; }
 
@@ -46,31 +46,30 @@
 
         .card {
             background: #fff; border-radius: 15px; overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
         }
-        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .card img { width: 100%; height: 170px; object-fit: cover; background: #f9f9f9; }
         .card-content { padding: 10px; }
-        .card-content h4 { font-size: 13px; font-weight: 600; height: 38px; overflow: hidden; }
-        .price { color: var(--primary); font-weight: 700; font-size: 16px; margin-top: 5px; }
+        .card-content h4 { font-size: 12px; font-weight: 600; height: 35px; overflow: hidden; }
+        .price { color: var(--primary); font-weight: 700; font-size: 15px; margin-top: 5px; }
 
         .buy-btn {
             background: #00c853; color: #fff; padding: 8px;
             border-radius: 8px; text-align: center; font-weight: 600;
-            margin-top: 8px; cursor: pointer; font-size: 14px;
+            margin-top: 8px; cursor: pointer; font-size: 13px;
         }
         .cart-btn {
             background: #f0f0f0; color: #333; padding: 6px;
-            border-radius: 8px; text-align: center; font-size: 12px;
+            border-radius: 8px; text-align: center; font-size: 11px;
             margin-top: 5px; cursor: pointer;
         }
 
-        /* SIDEBAR & OVERLAY */
         .sidebar, .cart-panel {
             position: fixed; top: 0; height: 100%;
             background: #fff; transition: 0.3s; z-index: 1001;
         }
         .sidebar { left: -260px; width: 250px; padding-top: 60px; }
-        .cart-panel { right: -310px; width: 300px; padding: 20px; }
+        .cart-panel { right: -310px; width: 300px; padding: 20px; overflow-y: auto; }
         .sidebar.open { left: 0; }
         .cart-panel.open { right: 0; }
         .overlay {
@@ -79,7 +78,6 @@
         }
         .sidebar a { display: block; padding: 15px 20px; text-decoration: none; color: #333; border-bottom: 1px solid #f9f9f9; }
 
-        /* FORM MODAL */
         .form-modal {
             display:none; position:fixed; top:0; left:0;
             width:100%; height:100%; background:rgba(0,0,0,0.7);
@@ -88,7 +86,7 @@
         .form-box { background:#fff; padding:20px; border-radius:15px; width:90%; max-width:350px; }
         .form-box input, .form-box textarea { width:100%; padding:10px; margin:8px 0; border:1px solid #ddd; border-radius:8px; }
 
-        footer { background: #111; color: #fff; padding: 30px 15px; text-align: center; margin-top: 30px; }
+        footer { background: #111; color: #fff; padding: 30px 15px; text-align: center; margin-top: 30px; font-size: 12px; }
         footer a { color: var(--primary); text-decoration: none; display: block; margin: 4px 0; }
     </style>
 </head>
@@ -96,8 +94,8 @@
 
 <header>
     <div style="display:flex; align-items:center; gap:12px;">
-        <div onclick="toggleMenu()" style="cursor:pointer;">☰</div>
-        <div class="logo">Sudheer Store</div>
+        <div onclick="toggleMenu()" style="cursor:pointer; font-size:20px;">☰</div>
+        <div class="logo">Sudheer Trendy Store</div>
     </div>
     <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
 </header>
@@ -107,15 +105,18 @@
 <div class="sidebar" id="sidebar">
     <a href="#" onclick="closeAll()">Home</a>
     <a href="javascript:void(0)" onclick="openFeedback()">Feedback</a>
-    <a href="https://wa.me/919235184684?text=Help" target="_blank">Help & Support</a>
+    <a href="https://wa.me/919235184684?text=I need help" target="_blank">Help & Support</a>
 </div>
 
 <div class="category-nav">
-    <div class="cat-btn active" onclick="filterCat('All')">All Items</div>
+    <div class="cat-btn active" onclick="filterCat('All')">All</div>
+    <div class="cat-btn" onclick="filterCat('Shirt')">Shirts</div>
+    <div class="cat-btn" onclick="filterCat('Pant')">Pants</div>
+    <div class="cat-btn" onclick="filterCat('Kurti')">Kurti</div>
+    <div class="cat-btn" onclick="filterCat('Suit')">Suits/Salwar</div>
     <div class="cat-btn" onclick="filterCat('Audio')">Audio</div>
     <div class="cat-btn" onclick="filterCat('Watch')">Watches</div>
     <div class="cat-btn" onclick="filterCat('Gadget')">Gadgets</div>
-    <div class="cat-btn" onclick="filterCat('Fashion')">Fashion</div>
 </div>
 
 <div class="top-banner">
@@ -151,29 +152,51 @@
 
 <script>
 const products = [
-    // TUMHARE ORIGINAL PRODUCTS (Price Same)
+    // CLOTHING - SHIRTS (Meesho + 200)
+    {cat:"Shirt", name:"Cotton Checkered Casual Shirt", price:499, img:"cotton-check-shirt.jpg"},
+    {cat:"Shirt", name:"Premium White Formal Shirt", price:550, img:"white-formal-shirt.jpg"},
+    {cat:"Shirt", name:"Denim Blue Slim Fit Shirt", price:699, img:"denim-shirt.jpg"},
+    {cat:"Shirt", name:"Printed Party Wear Shirt", price:580, img:"printed-shirt.jpg"},
+    {cat:"Shirt", name:"Linen Half Sleeve Shirt", price:450, img:"linen-shirt.jpg"},
+
+    // CLOTHING - PANTS (Meesho + 200)
+    {cat:"Pant", name:"Slim Fit Black Chinos", price:799, img:"black-chinos.jpg"},
+    {cat:"Pant", name:"Men Regular Fit Blue Jeans", price:850, img:"blue-jeans.jpg"},
+    {cat:"Pant", name:"Cargo Pants with 6 Pockets", price:999, img:"cargo-pants.jpg"},
+    {cat:"Pant", name:"Grey Formal Trousers", price:650, img:"grey-trouser.jpg"},
+    {cat:"Pant", name:"Cotton Track Pants Combo", price:599, img:"track-pants.jpg"},
+
+    // CLOTHING - KURTI (Meesho + 200)
+    {cat:"Kurti", name:"Rayon Printed Long Kurti", price:499, img:"printed-kurti.jpg"},
+    {cat:"Kurti", name:"Cotton Embroidery Anarkali", price:899, img:"anarkali-kurti.jpg"},
+    {cat:"Kurti", name:"Short Kurti for Jeans", price:350, img:"short-kurti.jpg"},
+    {cat:"Kurti", name:"Chikankari Work Kurti", price:1150, img:"chikankari-kurti.jpg"},
+    {cat:"Kurti", name:"Daily Wear Bandhani Kurti", price:420, img:"bandhani-kurti.jpg"},
+
+    // CLOTHING - SUIT/SALWAR (Meesho + 200)
+    {cat:"Suit", name:"Cotton Unstitched Suit Material", price:650, img:"suit-material.jpg"},
+    {cat:"Suit", name:"Designer Punjabi Salwar Suit", price:1350, img:"punjabi-suit.jpg"},
+    {cat:"Suit", name:"Georgette Party Wear Suit", price:1850, img:"georgette-suit.jpg"},
+    {cat:"Suit", name:"Simple Salwar Kameez Set", price:799, img:"salwar-kameez.jpg"},
+    {cat:"Suit", name:"Sharara Suit with Dupatta", price:1599, img:"sharara-suit.jpg"},
+
+    // TUMHARE ORIGINAL AUDIO (Price Same)
     {cat:"Audio", name:"Airp1ods TWS Wireless Earbuds", price:452, img:"airp1ods-tws.jpg"},
     {cat:"Audio", name:"Wappler BT 235V3 Neckband", price:423, img:"wappler-neckband.jpg"},
     {cat:"Audio", name:"ANC Deep Bass Earbuds", price:595, img:"anc-earbuds.jpg"},
     {cat:"Audio", name:"Bullet Magnetic Neckband (Red)", price:575, img:"bullet-neckband.jpg"},
-    {cat:"Fashion", name:"Women Rectangular Sunglasses", price:325, img:"rectangular-sunglasses.jpg"},
-    {cat:"Fashion", name:"AALAE Stylish Sunglasses", price:304, img:"aalae-sunglasses.jpg"},
-    {cat:"Gadget", name:"Portable Double Spray Mini AC", price:1354, img:"double-spray-ac.jpg"},
-    {cat:"Gadget", name:"Portable Mini AC Air Cooler", price:756, img:"mini-ac-cooler.jpg"},
-    {cat:"Gadget", name:"Mini Table Fan 5 Inch", price:575, img:"mini-table-fan.jpg"},
-    {cat:"Gadget", name:"USB Mini Night Light (Pack of 4)", price:296, img:"usb-night-light.jpg"},
-    {cat:"Watch", name:"Noise Quad Call Elite", price:1899, img:"quad-call-elite.jpg"},
-    {cat:"Watch", name:"Noise ColorFit Icon 2 Elite", price:1699, img:"colorfit-icon2.jpg"},
-    {cat:"Watch", name:"Top Quality Digital Smartwatch", price:711, img:"digital-smartwatch.jpg"},
-    {cat:"Watch", name:"Smartwatch Black Edition", price:1182, img:"smartwatch-black.jpg"},
 
-    // MEESHO PRODUCTS (Price + ₹200 added for profit)
-    {cat:"Watch", name:"T800 Ultra Luxury Smartwatch", price:899, img:"t800.jpg"},
-    {cat:"Gadget", name:"5-in-1 Keyboard Cleaning Kit", price:349, img:"cleaner.jpg"},
-    {cat:"Gadget", name:"Sunset Projector Lamp", price:549, img:"sunset.jpg"},
-    {cat:"Audio", name:"Magnetic Bluetooth Earphones", price:399, img:"magnetic.jpg"},
-    {cat:"Gadget", name:"LCD Magic Writing Pad", price:380, img:"lcd.jpg"},
-    {cat:"Fashion", name:"Men's Premium Leather Wallet", price:499, img:"wallet.jpg"}
+    // WATCHES (Price Same/Meesho Mix)
+    {cat:"Watch", name:"Noise Quad Call Elite", price:1899, img:"quad-call-elite.jpg"},
+    {cat:"Watch", name:"Top Quality Digital Smartwatch", price:711, img:"digital-smartwatch.jpg"},
+    {cat:"Watch", name:"T800 Ultra Luxury Watch", price:899, img:"t800-ultra.jpg"},
+    {cat:"Watch", name:"ID116 Fitness Band", price:399, img:"id116-band.jpg"},
+
+    // GADGETS (Price Same)
+    {cat:"Gadget", name:"Portable Mini AC Air Cooler", price:756, img:"mini-ac-cooler.jpg"},
+    {cat:"Gadget", name:"USB Mini Night Light (Pack of 4)", price:296, img:"usb-night-light.jpg"},
+    {cat:"Gadget", name:"5-in-1 Keyboard Cleaning Kit", price:349, img:"cleaning-kit.jpg"},
+    {cat:"Gadget", name:"Sunset Projector Mood Lamp", price:549, img:"sunset-lamp.jpg"}
 ];
 
 let cart = [];
@@ -186,7 +209,7 @@ function renderProducts(filter = 'All') {
         if(filter === 'All' || p.cat === filter) {
             list.innerHTML += `
             <div class="card">
-                <img src="${p.img}">
+                <img src="${p.img}" onerror="this.src='placeholder.jpg'">
                 <div class="card-content">
                     <h4>${p.name}</h4>
                     <div class="price">₹${p.price}</div>
@@ -209,15 +232,15 @@ function toggleMenu() { document.getElementById("sidebar").classList.toggle("ope
 function toggleCart() { document.getElementById("cartPanel").classList.toggle("open"); document.getElementById("overlay").style.display="block"; }
 function closeAll() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("cartPanel").classList.remove("open"); document.getElementById("overlay").style.display="none"; }
 
-function addToCart(i) { cart.push(products[i]); updateCart(); alert("Added to cart!"); }
+function addToCart(i) { cart.push(products[i]); updateCart(); alert("Item added!"); }
 function updateCart() {
     let itemsDiv = document.getElementById("cartItems");
     let total = 0;
     itemsDiv.innerHTML = "";
     cart.forEach((item, index) => {
         total += item.price;
-        itemsDiv.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-            <span style="font-size:12px;">${item.name}</span>
+        itemsDiv.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px;">
+            <span>${item.name}</span>
             <span style="color:red; cursor:pointer;" onclick="removeFromCart(${index})">✖</span>
         </div>`;
     });
@@ -228,7 +251,7 @@ function removeFromCart(i) { cart.splice(i,1); updateCart(); }
 
 function openForm(i) {
     selectedItem = products[i];
-    document.getElementById("formTitle").innerText = "Ordering: " + selectedItem.name;
+    document.getElementById("formTitle").innerText = "Buy: " + selectedItem.name;
     document.getElementById("orderForm").style.display = "flex";
 }
 function closeForm() { document.getElementById("orderForm").style.display = "none"; }
@@ -237,17 +260,18 @@ function submitOrder() {
     let name = document.getElementById("custName").value;
     let mobile = document.getElementById("custMobile").value;
     let addr = document.getElementById("custAddress").value;
-    if(!name || !mobile || !addr) { alert("Details fill karein!"); return; }
-    let msg = `*NEW ORDER*%0A*Item:* ${selectedItem.name}%0A*Price:* ₹${selectedItem.price}%0A*Customer:* ${name}%0A*Address:* ${addr}`;
+    if(!name || !mobile || !addr) { alert("Please enter details!"); return; }
+    let msg = `*NEW ORDER - SUDHEER STORE*%0A*Product:* ${selectedItem.name}%0A*Price:* ₹${selectedItem.price}%0A*Customer:* ${name}%0A*Address:* ${addr}`;
     window.open(`https://wa.me/919235184684?text=${msg}`);
     closeForm();
 }
 
 function checkoutCart() {
     if(cart.length === 0) return;
-    let list = cart.map(i => i.name).join(", ");
+    let list = cart.map(i => i.name + " (₹" + i.price + ")").join("%0A");
     let total = cart.reduce((a, b) => a + b.price, 0);
-    window.open(`https://wa.me/919235184684?text=I want to buy: ${list}%0ATotal: ₹${total}`);
+    let msg = `*NEW CART ORDER*%0A${list}%0A*Total:* ₹${total}%0A*Please send address*`;
+    window.open(`https://wa.me/919235184684?text=${msg}`);
 }
 
 function openFeedback() {
@@ -256,4 +280,5 @@ function openFeedback() {
 }
 </script>
 </body>
-</html>
+    </html>
+    
