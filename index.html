@@ -1,198 +1,259 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sudheer Trendy Store</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudheer Trendy Store | Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #0a58ff; --premium-black: #1a1a1a; --bg-light: #f4f7fe; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+        body { background: var(--bg-light); color: #333; }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#f5f7ff;color:#111;transition:0.3s;}
-body.dark{background:#111;color:#fff;}
+        header {
+            background: rgba(10, 88, 255, 0.95); backdrop-filter: blur(10px);
+            color: #fff; padding: 15px 20px; display: flex;
+            justify-content: space-between; align-items: center;
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
 
-header{
-background:#0a58ff;color:#fff;padding:15px;
-display:flex;justify-content:space-between;align-items:center;
-position:fixed;top:0;width:100%;z-index:1000;
-}
+        .logo { font-size: 19px; font-weight: 700; }
+        .cart-icon { position: relative; font-size: 22px; cursor: pointer; }
+        .cart-count {
+            position: absolute; top: -5px; right: -10px;
+            background: #ff3b3b; color: #fff; font-size: 10px;
+            padding: 2px 6px; border-radius: 50%; border: 2px solid #fff;
+        }
 
-.logo{font-weight:600;font-size:18px;}
-.search-box{margin-left:10px;}
-.search-box input{
-padding:6px;border-radius:8px;border:none;
-}
+        .category-nav {
+            margin-top: 70px; display: flex; overflow-x: auto;
+            background: #fff; padding: 12px; gap: 10px;
+            border-bottom: 1px solid #eee; scrollbar-width: none;
+        }
+        .cat-btn {
+            padding: 7px 16px; background: #f0f0f0;
+            border-radius: 20px; font-size: 13px; cursor: pointer; white-space: nowrap;
+        }
+        .cat-btn.active { background: var(--primary); color: #fff; }
 
-.toggle-dark{cursor:pointer;margin-left:10px;}
+        .top-banner img { width: 100%; height: auto; display: block; }
 
-.top-banner{margin-top:70px;}
-.top-banner img{width:100%;}
+        .products {
+            padding: 15px; display: grid;
+            grid-template-columns: repeat(2, 1fr); gap: 12px;
+        }
 
-.categories{
-display:flex;overflow:auto;padding:10px;
-gap:10px;background:#fff;
-position:sticky;top:60px;z-index:900;
-}
-.categories button{
-padding:6px 12px;border:none;
-border-radius:20px;background:#eee;
-cursor:pointer;font-size:12px;
-}
-.categories button.active{background:#0a58ff;color:#fff;}
+        .card {
+            background: #fff; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative;
+        }
+        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .card-content { padding: 10px; }
+        .card-content h4 { font-size: 13px; font-weight: 600; height: 38px; overflow: hidden; }
+        .price { color: var(--primary); font-weight: 700; font-size: 16px; margin-top: 5px; }
 
-.products{
-padding:15px;
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-}
+        .buy-btn {
+            background: #00c853; color: #fff; padding: 8px;
+            border-radius: 8px; text-align: center; font-weight: 600;
+            margin-top: 8px; cursor: pointer; font-size: 14px;
+        }
+        .cart-btn {
+            background: #f0f0f0; color: #333; padding: 6px;
+            border-radius: 8px; text-align: center; font-size: 12px;
+            margin-top: 5px; cursor: pointer;
+        }
 
-.card{
-background:#fff;border-radius:18px;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
-overflow:hidden;transition:0.3s;
-}
-body.dark .card{background:#1e1e1e;}
+        /* SIDEBAR & OVERLAY */
+        .sidebar, .cart-panel {
+            position: fixed; top: 0; height: 100%;
+            background: #fff; transition: 0.3s; z-index: 1001;
+        }
+        .sidebar { left: -260px; width: 250px; padding-top: 60px; }
+        .cart-panel { right: -310px; width: 300px; padding: 20px; }
+        .sidebar.open { left: 0; }
+        .cart-panel.open { right: 0; }
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; z-index: 900;
+        }
+        .sidebar a { display: block; padding: 15px 20px; text-decoration: none; color: #333; border-bottom: 1px solid #f9f9f9; }
 
-.card img{width:100%;height:160px;object-fit:cover;}
+        /* FORM MODAL */
+        .form-modal {
+            display:none; position:fixed; top:0; left:0;
+            width:100%; height:100%; background:rgba(0,0,0,0.7);
+            justify-content:center; align-items:center; z-index:2000;
+        }
+        .form-box { background:#fff; padding:20px; border-radius:15px; width:90%; max-width:350px; }
+        .form-box input, .form-box textarea { width:100%; padding:10px; margin:8px 0; border:1px solid #ddd; border-radius:8px; }
 
-.card-content{padding:10px;}
-.price{color:#0a58ff;font-weight:700;}
-.badge{
-background:red;color:#fff;
-font-size:10px;padding:3px 6px;
-border-radius:6px;display:inline-block;
-margin-bottom:4px;
-}
-
-.qty{
-display:flex;gap:5px;margin-top:5px;
-}
-.qty button{
-padding:3px 8px;border:none;
-background:#ddd;border-radius:5px;
-cursor:pointer;
-}
-
-.buy-btn{
-background:#00c853;color:#fff;
-padding:6px;text-align:center;
-border-radius:8px;margin-top:6px;
-cursor:pointer;font-size:13px;
-}
-
-footer{
-background:#111;color:#fff;
-padding:30px 15px;text-align:center;
-margin-top:30px;font-size:13px;
-}
-footer a{color:#0a58ff;display:block;margin:4px 0;text-decoration:none;}
-</style>
+        footer { background: #111; color: #fff; padding: 30px 15px; text-align: center; margin-top: 30px; }
+        footer a { color: var(--primary); text-decoration: none; display: block; margin: 4px 0; }
+    </style>
 </head>
-
 <body>
 
 <header>
-<div>
-<span class="logo">Sudheer Trendy Store</span>
-</div>
-<div style="display:flex;align-items:center;">
-<div class="search-box">
-<input type="text" id="search" placeholder="Search product...">
-</div>
-<div class="toggle-dark" onclick="toggleDark()">🌙</div>
-</div>
+    <div style="display:flex; align-items:center; gap:12px;">
+        <div onclick="toggleMenu()" style="cursor:pointer;">☰</div>
+        <div class="logo">Sudheer Store</div>
+    </div>
+    <div class="cart-icon" onclick="toggleCart()">🛒<span class="cart-count" id="cartCount">0</span></div>
 </header>
 
-<div class="top-banner">
-<img src="sudheer.jpg">
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<div class="sidebar" id="sidebar">
+    <a href="#" onclick="closeAll()">Home</a>
+    <a href="javascript:void(0)" onclick="openFeedback()">Feedback</a>
+    <a href="https://wa.me/919235184684?text=Help" target="_blank">Help & Support</a>
 </div>
 
-<div class="categories">
-<button onclick="filterCategory('All')" class="active">All</button>
-<button onclick="filterCategory('Shoes')">Shoes</button>
-<button onclick="filterCategory('Clothes')">Clothes</button>
-<button onclick="filterCategory('Mobile')">Mobile Accessories</button>
-<button onclick="filterCategory('Suit')">Suit</button>
+<div class="category-nav">
+    <div class="cat-btn active" onclick="filterCat('All')">All Items</div>
+    <div class="cat-btn" onclick="filterCat('Audio')">Audio</div>
+    <div class="cat-btn" onclick="filterCat('Watch')">Watches</div>
+    <div class="cat-btn" onclick="filterCat('Gadget')">Gadgets</div>
+    <div class="cat-btn" onclick="filterCat('Fashion')">Fashion</div>
+</div>
+
+<div class="top-banner">
+    <img src="sudheer.jpg" alt="Banner">
 </div>
 
 <section class="products" id="productList"></section>
 
+<div class="cart-panel" id="cartPanel">
+    <h3>My Cart</h3><hr><br>
+    <div id="cartItems"></div>
+    <h4 id="cartTotal" style="margin-top:10px;">Total: ₹0</h4>
+    <div class="buy-btn" onclick="checkoutCart()">Buy All (WhatsApp)</div>
+</div>
+
+<div class="form-modal" id="orderForm">
+    <div class="form-box">
+        <h3 id="formTitle">Order Details</h3>
+        <input type="text" id="custName" placeholder="Full Name">
+        <input type="text" id="custMobile" placeholder="WhatsApp Number">
+        <textarea id="custAddress" placeholder="Full Address with Pincode"></textarea>
+        <div class="buy-btn" onclick="submitOrder()">Place Order (COD)</div>
+        <p onclick="closeForm()" style="text-align:center; color:red; cursor:pointer; margin-top:10px;">Cancel</p>
+    </div>
+</div>
+
 <footer>
-<h3>Sudheer Trendy Store</h3>
-<p>Trusted Gadgets & Trending Products</p>
-<a href="#">Privacy Policy</a>
-<a href="#">Refund Policy</a>
-<a href="#">Terms & Conditions</a>
-<a href="#">Contact: sudhirbasti4@gmail.com</a>
-<p>Instagram: @sudheersharma.official</p>
-<p>Powered by Sudheer Tech | Growth & Digital Branding</p>
+    <h3>Sudheer Trendy Store</h3>
+    <a href="https://wa.me/919235184684">Contact: sudhirbasti4@gmail.com</a>
+    <p>Instagram: @sudheersharma.official</p>
+    <p>© 2026 Powered by Sudheer Tech</p>
 </footer>
 
 <script>
-const products=[
-{name:"Airp1ods TWS Wireless Earbuds",price:452,img:"airp1ods-tws.jpg",cat:"Mobile"},
-{name:"Wappler BT 235V3 Neckband",price:423,img:"wappler-neckband.jpg",cat:"Mobile"},
-{name:"ANC Deep Bass Earbuds",price:595,img:"anc-earbuds.jpg",cat:"Mobile"},
-{name:"Bullet Magnetic Neckband (Red)",price:575,img:"bullet-neckband.jpg",cat:"Mobile"},
-{name:"Women Rectangular Sunglasses",price:325,img:"rectangular-sunglasses.jpg",cat:"Clothes"},
-{name:"AALAE Stylish Sunglasses",price:304,img:"aalae-sunglasses.jpg",cat:"Clothes"},
-{name:"Portable Double Spray Mini AC",price:1354,img:"double-spray-ac.jpg",cat:"Mobile"},
-{name:"Portable Mini AC Air Cooler",price:756,img:"mini-ac-cooler.jpg",cat:"Mobile"},
-{name:"Mini Table Fan 5 Inch",price:575,img:"mini-table-fan.jpg",cat:"Mobile"},
-{name:"USB Mini Night Light (Pack of 4)",price:296,img:"usb-night-light.jpg",cat:"Mobile"},
-{name:"Noise Quad Call Elite",price:1899,img:"quad-call-elite.jpg",cat:"Mobile"},
-{name:"Noise ColorFit Icon 2 Elite",price:1699,img:"colorfit-icon2.jpg",cat:"Mobile"},
-{name:"Top Quality Digital Smartwatch",price:711,img:"digital-smartwatch.jpg",cat:"Mobile"},
-{name:"Smartwatch Black Edition",price:1182,img:"smartwatch-black.jpg",cat:"Mobile"}
+const products = [
+    // TUMHARE ORIGINAL PRODUCTS (Price Same)
+    {cat:"Audio", name:"Airp1ods TWS Wireless Earbuds", price:452, img:"airp1ods-tws.jpg"},
+    {cat:"Audio", name:"Wappler BT 235V3 Neckband", price:423, img:"wappler-neckband.jpg"},
+    {cat:"Audio", name:"ANC Deep Bass Earbuds", price:595, img:"anc-earbuds.jpg"},
+    {cat:"Audio", name:"Bullet Magnetic Neckband (Red)", price:575, img:"bullet-neckband.jpg"},
+    {cat:"Fashion", name:"Women Rectangular Sunglasses", price:325, img:"rectangular-sunglasses.jpg"},
+    {cat:"Fashion", name:"AALAE Stylish Sunglasses", price:304, img:"aalae-sunglasses.jpg"},
+    {cat:"Gadget", name:"Portable Double Spray Mini AC", price:1354, img:"double-spray-ac.jpg"},
+    {cat:"Gadget", name:"Portable Mini AC Air Cooler", price:756, img:"mini-ac-cooler.jpg"},
+    {cat:"Gadget", name:"Mini Table Fan 5 Inch", price:575, img:"mini-table-fan.jpg"},
+    {cat:"Gadget", name:"USB Mini Night Light (Pack of 4)", price:296, img:"usb-night-light.jpg"},
+    {cat:"Watch", name:"Noise Quad Call Elite", price:1899, img:"quad-call-elite.jpg"},
+    {cat:"Watch", name:"Noise ColorFit Icon 2 Elite", price:1699, img:"colorfit-icon2.jpg"},
+    {cat:"Watch", name:"Top Quality Digital Smartwatch", price:711, img:"digital-smartwatch.jpg"},
+    {cat:"Watch", name:"Smartwatch Black Edition", price:1182, img:"smartwatch-black.jpg"},
+
+    // MEESHO PRODUCTS (Price + ₹200 added for profit)
+    {cat:"Watch", name:"T800 Ultra Luxury Smartwatch", price:899, img:"t800.jpg"},
+    {cat:"Gadget", name:"5-in-1 Keyboard Cleaning Kit", price:349, img:"cleaner.jpg"},
+    {cat:"Gadget", name:"Sunset Projector Lamp", price:549, img:"sunset.jpg"},
+    {cat:"Audio", name:"Magnetic Bluetooth Earphones", price:399, img:"magnetic.jpg"},
+    {cat:"Gadget", name:"LCD Magic Writing Pad", price:380, img:"lcd.jpg"},
+    {cat:"Fashion", name:"Men's Premium Leather Wallet", price:499, img:"wallet.jpg"}
 ];
 
-let currentCategory="All";
+let cart = [];
+let selectedItem = null;
 
-function renderProducts(){
-let list=document.getElementById("productList");
-let search=document.getElementById("search").value.toLowerCase();
-list.innerHTML="";
-products.filter(p=>{
-return (currentCategory==="All"||p.cat===currentCategory)
-&& p.name.toLowerCase().includes(search);
-})
-.forEach(p=>{
-list.innerHTML+=`
-<div class="card">
-<img src="${p.img}">
-<div class="card-content">
-<span class="badge">Trending</span>
-<h4>${p.name}</h4>
-<div class="price">₹${p.price}</div>
-<div class="qty">
-<button>-</button>
-<span>1</span>
-<button>+</button>
-</div>
-<div class="buy-btn">Buy Now</div>
-</div>
-</div>`;
-});
+function renderProducts(filter = 'All') {
+    let list = document.getElementById("productList");
+    list.innerHTML = "";
+    products.forEach((p, i) => {
+        if(filter === 'All' || p.cat === filter) {
+            list.innerHTML += `
+            <div class="card">
+                <img src="${p.img}">
+                <div class="card-content">
+                    <h4>${p.name}</h4>
+                    <div class="price">₹${p.price}</div>
+                    <div class="buy-btn" onclick="openForm(${i})">Buy Now</div>
+                    <div class="cart-btn" onclick="addToCart(${i})">Add to Cart</div>
+                </div>
+            </div>`;
+        }
+    });
 }
-
-function filterCategory(cat){
-currentCategory=cat;
-document.querySelectorAll(".categories button").forEach(btn=>{
-btn.classList.remove("active");
-if(btn.innerText.includes(cat)) btn.classList.add("active");
-});
 renderProducts();
+
+function filterCat(cat) {
+    document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    renderProducts(cat);
 }
 
-document.getElementById("search").addEventListener("input",renderProducts);
+function toggleMenu() { document.getElementById("sidebar").classList.toggle("open"); document.getElementById("overlay").style.display="block"; }
+function toggleCart() { document.getElementById("cartPanel").classList.toggle("open"); document.getElementById("overlay").style.display="block"; }
+function closeAll() { document.getElementById("sidebar").classList.remove("open"); document.getElementById("cartPanel").classList.remove("open"); document.getElementById("overlay").style.display="none"; }
 
-function toggleDark(){
-document.body.classList.toggle("dark");
+function addToCart(i) { cart.push(products[i]); updateCart(); alert("Added to cart!"); }
+function updateCart() {
+    let itemsDiv = document.getElementById("cartItems");
+    let total = 0;
+    itemsDiv.innerHTML = "";
+    cart.forEach((item, index) => {
+        total += item.price;
+        itemsDiv.innerHTML += `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span style="font-size:12px;">${item.name}</span>
+            <span style="color:red; cursor:pointer;" onclick="removeFromCart(${index})">✖</span>
+        </div>`;
+    });
+    document.getElementById("cartCount").innerText = cart.length;
+    document.getElementById("cartTotal").innerText = "Total: ₹" + total;
+}
+function removeFromCart(i) { cart.splice(i,1); updateCart(); }
+
+function openForm(i) {
+    selectedItem = products[i];
+    document.getElementById("formTitle").innerText = "Ordering: " + selectedItem.name;
+    document.getElementById("orderForm").style.display = "flex";
+}
+function closeForm() { document.getElementById("orderForm").style.display = "none"; }
+
+function submitOrder() {
+    let name = document.getElementById("custName").value;
+    let mobile = document.getElementById("custMobile").value;
+    let addr = document.getElementById("custAddress").value;
+    if(!name || !mobile || !addr) { alert("Details fill karein!"); return; }
+    let msg = `*NEW ORDER*%0A*Item:* ${selectedItem.name}%0A*Price:* ₹${selectedItem.price}%0A*Customer:* ${name}%0A*Address:* ${addr}`;
+    window.open(`https://wa.me/919235184684?text=${msg}`);
+    closeForm();
 }
 
-renderProducts();
+function checkoutCart() {
+    if(cart.length === 0) return;
+    let list = cart.map(i => i.name).join(", ");
+    let total = cart.reduce((a, b) => a + b.price, 0);
+    window.open(`https://wa.me/919235184684?text=I want to buy: ${list}%0ATotal: ₹${total}`);
+}
+
+function openFeedback() {
+    let fb = prompt("Enter your feedback:");
+    if(fb) window.open(`https://wa.me/919235184684?text=Feedback: ${fb}`);
+}
 </script>
-
 </body>
 </html>
