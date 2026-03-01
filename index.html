@@ -8,7 +8,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{background:#ffffff;color:#111;}
+body{background:#fff;color:#111;}
 
 /* HEADER */
 header{
@@ -25,13 +25,28 @@ z-index:1000;
 box-shadow:0 4px 15px rgba(0,0,0,0.15);
 }
 
-.logo{font-size:18px;font-weight:600;}
+.left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.menu-btn{
+font-size:22px;
+cursor:pointer;
+}
+
+.logo{
+font-size:18px;
+font-weight:600;
+}
 
 .cart-icon{
 position:relative;
 cursor:pointer;
 font-size:20px;
 }
+
 .cart-count{
 position:absolute;
 top:-6px;
@@ -43,26 +58,53 @@ padding:3px 6px;
 border-radius:50%;
 }
 
-/* CATEGORY */
-.category-bar{
-margin-top:70px;
-padding:10px;
-display:flex;
-overflow:auto;
-gap:10px;
+/* OVERLAY */
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+display:none;
+z-index:900;
+}
+
+/* SIDEBAR */
+.sidebar{
+position:fixed;
+top:0;
+left:-250px;
+width:240px;
+height:100%;
 background:#fff;
+box-shadow:5px 0 20px rgba(0,0,0,0.2);
+transition:0.3s;
+padding-top:70px;
+z-index:1001;
 }
-.category-btn{
-padding:6px 14px;
-border-radius:20px;
-background:#f2f6ff;
-font-size:13px;
-cursor:pointer;
-white-space:nowrap;
+
+.sidebar.open{
+left:0;
 }
-.category-btn.active{
-background:#0a58ff;
-color:#fff;
+
+.sidebar a{
+display:block;
+padding:15px;
+text-decoration:none;
+color:#111;
+border-bottom:1px solid #eee;
+}
+
+/* BANNER */
+.top-banner{
+margin-top:70px;
+}
+
+.top-banner img{
+width:100%;
+max-height:300px;
+object-fit:cover;
 }
 
 /* PRODUCTS */
@@ -79,11 +121,6 @@ border-radius:18px;
 box-shadow:0 8px 20px rgba(0,0,0,0.08);
 overflow:hidden;
 transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-box-shadow:0 12px 25px rgba(0,0,0,0.12);
 }
 
 .card img{
@@ -140,10 +177,13 @@ background:#fff;
 box-shadow:-5px 0 20px rgba(0,0,0,0.2);
 padding:15px;
 transition:0.3s;
-z-index:2000;
+z-index:1001;
 overflow:auto;
 }
-.cart-panel.open{right:0;}
+
+.cart-panel.open{
+right:0;
+}
 
 .remove-btn{
 color:red;
@@ -173,7 +213,7 @@ height:100%;
 background:rgba(0,0,0,0.6);
 justify-content:center;
 align-items:center;
-z-index:3000;
+z-index:2000;
 }
 
 .form-box{
@@ -192,22 +232,6 @@ border:1px solid #ddd;
 border-radius:8px;
 }
 
-/* FOOTER */
-footer{
-background:#111;
-color:#fff;
-padding:30px 15px;
-text-align:center;
-margin-top:30px;
-font-size:13px;
-}
-footer a{
-color:#0a58ff;
-display:block;
-margin:4px 0;
-text-decoration:none;
-}
-
 @media(max-width:600px){
 .products{grid-template-columns:1fr;}
 }
@@ -217,19 +241,27 @@ text-decoration:none;
 <body>
 
 <header>
+<div class="left">
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 <div class="logo">Sudheer Trendy Store</div>
+</div>
+
 <div class="cart-icon" onclick="toggleCart()">🛒
 <span class="cart-count" id="cartCount">0</span>
 </div>
 </header>
 
-<div class="category-bar">
-<div class="category-btn active">All</div>
-<div class="category-btn">Electronics</div>
-<div class="category-btn">Wearables</div>
-<div class="category-btn">Cooling</div>
-<div class="category-btn">Accessories</div>
-<div class="category-btn">Clothing</div>
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<div class="sidebar" id="sidebar">
+<a href="#">Home</a>
+<a href="#">My Orders</a>
+<a href="#">Feedback</a>
+<a href="#">Help & Support</a>
+</div>
+
+<div class="top-banner">
+<img src="sudheer.jpg">
 </div>
 
 <section class="products" id="productList"></section>
@@ -251,16 +283,6 @@ text-decoration:none;
 <div class="buy-btn" onclick="submitOrder()">Submit Order</div>
 </div>
 </div>
-
-<footer>
-<h3>Sudheer Trendy Store</h3>
-<p>Trusted Gadgets & Trending Products</p>
-<a href="#">Privacy Policy</a>
-<a href="#">Terms & Conditions</a>
-<a href="#">Contact: sudhirbasti4@gmail.com</a>
-<p>Instagram: @sudheersharma.official</p>
-<p>Powered by Sudheer Tech | Growth & Digital Branding</p>
-</footer>
 
 <script>
 const products=[
@@ -333,7 +355,7 @@ let total=0;
 items.innerHTML="";
 cart.forEach((item,i)=>{
 total+=item.price;
-items.innerHTML+=`<p>${item.name} - ₹${item.price} <span class="remove-btn" onclick="removeItem(${i})">Remove</span></p>`;
+items.innerHTML+=`${item.name} - ₹${item.price} <span class="remove-btn" onclick="removeItem(${i})">Remove</span><br>`;
 });
 document.getElementById("cartCount").innerText=cart.length;
 document.getElementById("cartTotal").innerText="Total: ₹"+total;
@@ -348,8 +370,20 @@ message+=`${item.name} - ₹${item.price}%0A`;
 window.open(`https://wa.me/919235184684?text=${message}`,'_blank');
 }
 
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("open");
+document.getElementById("overlay").style.display="block";
+}
+
 function toggleCart(){
 document.getElementById("cartPanel").classList.toggle("open");
+document.getElementById("overlay").style.display="block";
+}
+
+function closeAll(){
+document.getElementById("sidebar").classList.remove("open");
+document.getElementById("cartPanel").classList.remove("open");
+document.getElementById("overlay").style.display="none";
 }
 </script>
 
